@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learning with my teacher - K-5 Math</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2F3A56"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top"><div class="row">
+  <div class="brand"><span class="bolt">&divide;</span><span class="tname">Learning with my teacher</span></div>
+  <span id="navviews" class="navviews"><button class="vtab" id="v-home">Home</button><button class="vtab" id="v-plan">Plan</button><button class="vtab" id="v-teach">Teach</button><button class="vtab" id="v-asg">Assignments</button><button class="vtab" id="v-act">Activities</button><button class="vtab" id="v-progress">Progress</button><button class="vtab" id="v-standards">Standards</button><button class="vtab" id="v-students">Students</button><button class="vtab" id="v-settings">Settings</button></span>
+  <div class="stars" id="stars" title="Class stars: earned for correct answers. Click to learn more.">&#9733; 0</div>
+</div><div class="row row2">
+  <span class="glabel">Subject:</span><select id="subjsel" aria-label="Subject"></select><span class="glabel">Grade:</span><div class="gpick" id="gpick"></div><span class="stupill" id="stupill"></span>
+  <select id="wksel" aria-label="Week"></select>
+  <button class="ghost" id="teacherBtn">For teachers</button>
+</div></header>
+<div class="ctx" id="ctx"></div><div class="banner" id="banner" style="display:none"></div>
+<div class="shell wide" id="shell"><nav class="rail" id="rail" aria-label="Weeks"></nav><main id="main"></main></div>
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Teacher panel"><div class="drawer-inner" id="drawerInner"></div></div>
+<script src="data.js"></script><script src="engine.js"></script><script src="app.js"></script>
+</body>
+</html>

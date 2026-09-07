@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learning with Mrs. Garcia — 5th Grade Division</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#21243D;
+  --ink-soft:#4B5075;
+  --sky:#E9F0FA;
+  --steel:#2F3A56;
+  --lemon:#FFC93C;
+  --tomato:#FF6B54;
+  --mint:#20B486;
+  --grape:#7B61FF;
+  --card:#FFFFFF;
+  --line:#D6DEEC;
+  --shadow:0 10px 0 -4px rgba(33,36,61,.10);
+  --r:16px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--sky);
+  color:var(--ink);
+  font-family:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:17px;
+  line-height:1.6;
+  -webkit-text-size-adjust:100%;
+}
+h1,h2,h3,h4,.display{font-family:"Baloo 2","Nunito",system-ui,sans-serif;line-height:1.15;margin:0 0 .4em}
+h1{font-size:clamp(2rem,5.2vw,3.2rem);font-weight:800;letter-spacing:-.01em}
+h2{font-size:clamp(1.4rem,3.4vw,2rem);font-weight:700}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0 0 1em;max-width:66ch}
+a{color:#3A56C9}
+a:hover{color:var(--grape)}
+button{font:inherit;font-family:"Baloo 2","Nunito",sans-serif;cursor:pointer}
+:focus-visible{outline:3px solid var(--grape);outline-offset:3px;border-radius:8px}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:40;
+  background:var(--steel);color:#fff;
+  padding:.55rem 1rem;
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+  border-bottom:4px solid var(--lemon);
+}
+.brand{display:flex;align-items:center;gap:.6rem;font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.15rem}
+.brand .bolt{
+  width:34px;height:34px;border-radius:10px;background:var(--lemon);color:var(--steel);
+  display:grid;place-items:center;font-size:1.15rem;font-weight:800;flex:none;
+}
+.meter{flex:1;min-width:180px;display:flex;align-items:center;gap:.6rem}
+.meter-track{flex:1;height:14px;background:#1E2740;border-radius:99px;overflow:hidden;border:2px solid #46527A}
+.meter-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--mint),var(--lemon));transition:width .45s ease}
+.meter-label{font-family:"Baloo 2",sans-serif;font-weight:700;font-size:.95rem;white-space:nowrap}
+.ghost-btn{
+  background:transparent;color:#fff;border:2px solid #6B78A3;border-radius:99px;
+  padding:.3rem .9rem;font-weight:700;font-size:.9rem;
+}
+.ghost-btn:hover{border-color:var(--lemon);color:var(--lemon)}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:250px 1fr;gap:1.5rem;max-width:1180px;margin:0 auto;padding:1.5rem 1rem 4rem}
+.rail{position:sticky;top:78px;align-self:start;display:flex;flex-direction:column;gap:.45rem}
+.rail-title{font-family:"Baloo 2",sans-serif;font-weight:700;font-size:.95rem;color:var(--ink-soft);margin:.2rem 0 .3rem}
+.stop{
+  display:grid;grid-template-columns:34px 1fr;align-items:center;gap:.6rem;
+  background:var(--card);border:2px solid var(--line);border-radius:12px;
+  padding:.5rem .6rem;text-align:left;color:var(--ink);font-weight:700;font-size:.95rem;
+}
+.stop .num{
+  width:34px;height:34px;border-radius:9px;background:var(--sky);color:var(--ink-soft);
+  display:grid;place-items:center;font-weight:800;font-size:.95rem;
+}
+.stop[aria-current="true"]{border-color:var(--steel);background:#fff;box-shadow:var(--shadow)}
+.stop[aria-current="true"] .num{background:var(--lemon);color:var(--steel)}
+.stop.done .num{background:var(--mint);color:#fff}
+.stop.done .num::after{content:"✓"}
+.stop.done .num span{display:none}
+
+/* ---------- stations ---------- */
+.station{display:none;animation:pop .25s ease}
+.station.active{display:block}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.card{
+  background:var(--card);border:2px solid var(--line);border-radius:var(--r);
+  padding:1.25rem;margin:0 0 1.1rem;box-shadow:var(--shadow);
+}
+.card.tight{padding:1rem}
+.eyebrow{font-family:"Baloo 2",sans-serif;font-weight:700;color:var(--ink-soft);margin-bottom:.2rem}
+.hero{
+  background:var(--steel);color:#fff;border:none;
+  background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.03) 0 12px,transparent 12px 24px);
+}
+.hero h1{color:#fff}
+.hero p{color:#D7DEF0}
+.hero .eyebrow{color:var(--lemon)}
+
+/* ---------- machine / crates ---------- */
+.machine{background:#F4F7FD;border:2px dashed var(--line);border-radius:14px;padding:1rem;margin:.8rem 0}
+.hero .machine{background:#26304A;border-color:#48557C}
+.controls{display:flex;flex-wrap:wrap;gap:.8rem 1.2rem;align-items:center;margin-bottom:.8rem}
+.ctl{display:flex;align-items:center;gap:.5rem;font-weight:700;font-size:.95rem}
+.ctl input[type=range]{width:150px;accent-color:var(--lemon)}
+.chip{
+  border:2px solid var(--line);background:#fff;color:var(--ink);
+  border-radius:99px;padding:.25rem .8rem;font-weight:700;font-size:.95rem;
+}
+.chip[aria-pressed="true"]{background:var(--lemon);border-color:var(--lemon);color:var(--steel)}
+.crates{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.7rem}
+.crate{
+  background:#fff;border:2px solid var(--line);border-radius:10px;padding:.45rem;
+  min-width:74px;display:flex;flex-wrap:wrap;gap:4px;align-content:flex-start;
+  position:relative;padding-top:1.1rem;
+}
+.crate::before{
+  content:attr(data-label);position:absolute;top:2px;left:6px;
+  font-size:.7rem;font-weight:700;color:var(--ink-soft);font-family:"Baloo 2",sans-serif;
+}
+.crate.leftover{border-color:var(--tomato);border-style:dashed;background:#FFF3F0}
+.crate.leftover::before{color:var(--tomato)}
+.dot{width:14px;height:14px;border-radius:4px;background:var(--grape)}
+.crate.leftover .dot{background:var(--tomato)}
+.readout{
+  font-family:"Roboto Mono",ui-monospace,monospace;font-weight:700;
+  background:var(--steel);color:var(--lemon);border-radius:10px;
+  padding:.5rem .8rem;display:inline-block;margin-top:.7rem;font-size:1.05rem;
+}
+.hero .readout{background:#111A2E}
+
+/* ---------- long division ---------- */
+.ld{display:inline-grid;gap:0;font-family:"Roboto Mono",ui-monospace,monospace;font-weight:700;font-size:1.5rem;margin:.4rem 0}
+.ld .cell{width:1.5em;height:1.45em;display:grid;place-items:center}
+.ld .gut{width:3.2em;justify-items:end;padding-right:.15em}
+.ld .vinc{border-top:3px solid var(--ink)}
+.ld .bracket{border-left:3px solid var(--ink);border-top-left-radius:10px}
+.ld .q{color:var(--grape)}
+.ld .prod{color:var(--tomato)}
+.ld .rem{color:var(--mint)}
+.ld .underline{border-bottom:3px solid var(--tomato)}
+.ld .bringdown{color:#B57F00;background:#FFF6DC;border-radius:5px}
+.dmsb{display:flex;gap:.4rem;flex-wrap:wrap;margin:.6rem 0}
+.dmsb span{
+  border:2px solid var(--line);border-radius:99px;padding:.15rem .7rem;
+  font-family:"Baloo 2",sans-serif;font-weight:700;font-size:.9rem;color:var(--ink-soft);
+}
+.dmsb span.on{background:var(--steel);border-color:var(--steel);color:#fff}
+
+/* ---------- buttons ---------- */
+.btn{
+  background:var(--lemon);color:var(--steel);border:none;border-bottom:4px solid #D9A50E;
+  border-radius:12px;padding:.55rem 1.1rem;font-weight:800;font-size:1rem;
+}
+.btn:hover{filter:brightness(1.05)}
+.btn:active{transform:translateY(2px);border-bottom-width:2px}
+.btn.alt{background:var(--grape);color:#fff;border-bottom-color:#5842CC}
+.btn.quiet{background:#fff;color:var(--ink);border:2px solid var(--line);border-bottom-width:4px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-row{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.8rem}
+
+/* ---------- questions ---------- */
+.q{border-top:2px solid var(--line);padding-top:1rem;margin-top:1rem}
+.q:first-of-type{border-top:none;padding-top:0;margin-top:0}
+.q .prompt{font-weight:700;margin-bottom:.6rem}
+.opts{display:grid;gap:.5rem;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-bottom:.5rem}
+.opt{
+  background:#fff;border:2px solid var(--line);border-bottom-width:4px;border-radius:12px;
+  padding:.55rem .8rem;text-align:left;font-weight:700;color:var(--ink);
+}
+.opt:hover{border-color:var(--grape)}
+.opt.right{background:#E4F7F0;border-color:var(--mint);color:#0E6E52}
+.opt.wrong{background:#FFECE8;border-color:var(--tomato);color:#9A2E19}
+.opt[disabled]{cursor:default}
+.feedback{font-weight:700;border-radius:10px;padding:.5rem .8rem;display:none}
+.feedback.show{display:block}
+.feedback.yes{background:#E4F7F0;color:#0E6E52}
+.feedback.no{background:#FFECE8;color:#9A2E19}
+.hintbtn{background:none;border:none;color:#3A56C9;font-weight:700;text-decoration:underline;padding:0;font-size:.95rem}
+.hint{display:none;background:#FFF6DC;border-left:5px solid var(--lemon);padding:.5rem .8rem;border-radius:0 10px 10px 0;font-weight:600}
+.hint.show{display:block}
+input[type=text],input[type=number]{
+  font:inherit;font-family:"Roboto Mono",monospace;font-weight:700;
+  border:2px solid var(--line);border-radius:10px;padding:.4rem .6rem;width:8.5rem;
+}
+.scorebox{
+  background:var(--steel);color:#fff;border-radius:14px;padding:1rem;
+  display:none;align-items:center;gap:1rem;flex-wrap:wrap;
+}
+.scorebox.show{display:flex}
+.scorebox .big{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:2.4rem;color:var(--lemon);line-height:1}
+
+/* ---------- misc ---------- */
+.grid2{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.word{background:#FFF6DC;border-radius:10px;padding:.15rem .45rem;font-weight:800}
+.vocab{display:grid;gap:.6rem;margin:0;padding:0;list-style:none}
+.vocab li{background:#F4F7FD;border-left:5px solid var(--grape);border-radius:0 10px 10px 0;padding:.5rem .8rem}
+.vocab b{font-family:"Baloo 2",sans-serif}
+.bar-model{display:flex;border:2px solid var(--steel);border-radius:8px;overflow:hidden;margin:.5rem 0;min-height:44px}
+.bar-model div{
+  flex:1;border-right:2px dashed var(--steel);display:grid;place-items:center;
+  font-weight:700;font-size:.85rem;background:#FFF6DC;
+}
+.bar-model div:last-child{border-right:none}
+.tag{display:inline-block;background:var(--grape);color:#fff;border-radius:99px;padding:.05rem .6rem;font-size:.8rem;font-weight:700;font-family:"Baloo 2",sans-serif}
+.tag.mint{background:var(--mint)}
+.tag.tom{background:var(--tomato)}
+details{background:#F4F7FD;border:2px solid var(--line);border-radius:12px;padding:.7rem .9rem;margin:.6rem 0}
+summary{font-family:"Baloo 2",sans-serif;font-weight:700;cursor:pointer}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:.5rem 0}
+th,td{border:1px solid var(--line);padding:.45rem .55rem;text-align:left;vertical-align:top}
+th{background:#F4F7FD;font-family:"Baloo 2",sans-serif}
+
+/* certificate */
+.cert{
+  border:6px double var(--steel);border-radius:18px;padding:1.6rem;text-align:center;background:#fff;
+}
+.cert .name{font-family:"Baloo 2",sans-serif;font-size:2rem;font-weight:800;color:var(--grape);border-bottom:3px dotted var(--line);display:inline-block;padding:0 1rem .2rem;min-width:14rem}
+
+/* teacher drawer */
+.drawer{
+  position:fixed;inset:0;background:rgba(33,36,61,.55);z-index:60;display:none;padding:2rem 1rem;overflow:auto;
+}
+.drawer.open{display:block}
+.drawer-inner{max-width:820px;margin:0 auto;background:#fff;border-radius:18px;padding:1.4rem}
+
+@media (max-width:820px){
+  .shell{grid-template-columns:1fr;padding-top:1rem}
+  .rail{position:static;flex-direction:row;overflow-x:auto;padding-bottom:.4rem;gap:.4rem}
+.stop{min-width:150px}
+  .stop .label{font-size:.85rem}
+  .ld{font-size:1.15rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+@media print{
+  .topbar,.rail,.btn-row,.drawer,#certActions{display:none!important}
+  .station{display:none!important}
+  .station.active{display:block!important}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand"><span class="bolt">÷</span> Learning with Mrs. Garcia</div>
+  <div class="meter">
+    <div class="meter-track"><div class="meter-fill" id="meterFill"></div></div>
+    <div class="meter-label" id="meterLabel">0 of 7 stations</div>
+  </div>
+  <button class="ghost-btn" id="teacherBtn">For teachers</button>
+</header>
+
+<div class="shell">
+
+  <nav class="rail" aria-label="Stations">
+    <div class="rail-title">Your shift today</div>
+    <!-- filled by JS -->
+  </nav>
+
+  <main id="main">
+
+  <!-- ============ 0 ============ -->
+  <section class="station active" id="s0" tabindex="-1">
+    <div class="card hero">
+      <div class="eyebrow">Station 1 · Warm-up</div>
+      <h1>Everything gets packed in equal groups.</h1>
+      <p>Welcome to Mrs. Garcia's packing floor. Cookies come down the belt, and your job is to load them into crates so every crate holds the <b>same amount</b>. That is all division really is: fair sharing.</p>
+      <p>Move the sliders and watch the machine work. Anything that will not fit evenly falls into the leftover bin.</p>
+
+      <div class="machine">
+        <div class="controls">
+          <label class="ctl">Cookies on the belt
+            <input type="range" id="totalSlider" min="6" max="60" value="24" aria-label="Number of cookies">
+            <b id="totalOut">24</b>
+          </label>
+          <label class="ctl">Crates
+            <input type="range" id="groupSlider" min="2" max="9" value="4" aria-label="Number of crates">
+            <b id="groupOut">4</b>
+          </label>
+        </div>
+        <div class="crates" id="crates" aria-live="polite"></div>
+        <div class="readout" id="splitOut">24 ÷ 4 = 6</div>
+      </div>
+
+      <p style="color:#D7DEF0"><b>Try this:</b> set the belt to 29 cookies and 4 crates. What lands in the leftover bin? That number is called the <b>remainder</b>.</p>
+    </div>
+
+    <div class="card">
+      <h2>The words on your uniform</h2>
+      <ul class="vocab">
+        <li><b>Dividend</b> — the total you start with. The cookies on the belt.</li>
+        <li><b>Divisor</b> — how you are splitting it. The number of crates.</li>
+        <li><b>Quotient</b> — how many go in each crate. The answer.</li>
+        <li><b>Remainder</b> — what is left over when it does not split evenly.</li>
+      </ul>
+      <p style="margin-top:1em">So in <span class="word">29 ÷ 4 = 7 R1</span>: 29 is the dividend, 4 is the divisor, 7 is the quotient, and 1 is the remainder.</p>
+    </div>
+
+    <div class="card" id="warmup">
+      <h2>Quick check</h2>
+      <div id="warmupQs"></div>
+    </div>
+  </section>
+
+  <!-- ============ 1 ============ -->
+  <section class="station" id="s1" tabindex="-1">
+    <div class="card">
+      <div class="eyebrow">Station 2 · Estimate first</div>
+      <h1>Guess before you divide.</h1>
+      <p>Before a real packing crew runs a big order, they estimate. It takes five seconds and it catches almost every mistake. The trick is to swap the hard numbers for <b>friendly numbers</b> that are close by.</p>
+
+      <div class="machine">
+        <p style="margin:0 0 .5em"><b>Order:</b> 812 boxes ÷ 19 trucks</p>
+        <p style="margin:0 0 .5em">19 is nearly 20. 812 is nearly 800.</p>
+        <p style="margin:0"><b>800 ÷ 20 = 40.</b> So the real answer should be somewhere near 40 — not 4, and not 400.</p>
+      </div>
+
+      <p>Now you have a guard rail. If your long division gives you 427, you know something went wrong before the teacher ever sees it.</p>
+      <details>
+        <summary>How do I pick a friendly number?</summary>
+        <p style="margin:.6em 0 0">Round the divisor to the nearest ten. Then change the dividend to a number that divides by it easily. 3,412 ÷ 68 becomes 3,500 ÷ 70 = 50. You are not looking for the exact answer, just the right neighborhood.</p>
+      </details>
+    </div>
+
+    <div class="card">
+      <h2>Estimation drills</h2>
+      <div id="estQs"></div>
+    </div>
+  </section>
+
+  <!-- ============ 2 ============ -->
+  <section class="station" id="s2" tabindex="-1">
+    <div class="card">
+      <div class="eyebrow">Station 3 · Partial quotients</div>
+      <h1>Pack it in big chunks.</h1>
+      <p>You do not have to load one crate at a time. Load 10 crates at once, then 20, then whatever is left. This is called <b>partial quotients</b>, and it works even when you are not sure of the answer yet.</p>
+      <p><b>The order:</b> 736 cookies ÷ 23 per crate. How many crates can you fill?</p>
+
+      <div class="machine">
+        <p style="margin:0 0 .5em"><b>Cookies still on the belt:</b> <span class="readout" id="pqLeft">736</span></p>
+        <p style="margin:.5em 0"><b>Crates filled so far:</b> <span class="readout" id="pqCount">0</span></p>
+        <div class="controls" style="margin:.6rem 0 0">
+          <span class="ctl">Fill crates in groups of:</span>
+          <button class="chip pq" data-n="1">1</button>
+          <button class="chip pq" data-n="2">2</button>
+          <button class="chip pq" data-n="5">5</button>
+          <button class="chip pq" data-n="10">10</button>
+          <button class="chip pq" data-n="20">20</button>
+          <button class="chip pq" data-n="30">30</button>
+        </div>
+        <div id="pqLog" style="margin-top:.7rem;font-family:'Roboto Mono',monospace;font-size:.95rem"></div>
+        <div class="feedback" id="pqFb" role="status"></div>
+        <div class="btn-row">
+          <button class="btn quiet" id="pqReset">Start over</button>
+        </div>
+      </div>
+
+      <details>
+        <summary>Why does this work?</summary>
+        <p style="margin:.6em 0 0">Filling 20 crates and then 10 crates and then 2 crates is the same as filling 32 crates. You are just breaking one big job into pieces you can actually do in your head. 20 × 23 = 460 is easy. 32 × 23 is not.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============ 3 ============ -->
+  <section class="station" id="s3" tabindex="-1">
+    <div class="card">
+      <div class="eyebrow">Station 4 · The standard algorithm</div>
+      <h1>Long division, one step at a time.</h1>
+      <p>Long division repeats the same four moves until the belt is empty. Say them out loud: <b>Divide, Multiply, Subtract, Bring down.</b> Then start again.</p>
+
+      <div class="machine">
+        <div class="dmsb" id="dmsb">
+          <span data-k="D">Divide</span>
+          <span data-k="M">Multiply</span>
+          <span data-k="S">Subtract</span>
+          <span data-k="B">Bring down</span>
+        </div>
+        <div id="ldWrap"></div>
+        <div class="feedback yes show" id="ldCaption" style="background:#F4F7FD;color:var(--ink)"></div>
+        <div class="btn-row">
+          <button class="btn" id="ldNext">Next step</button>
+          <button class="btn quiet" id="ldAll">Show all steps</button>
+          <button class="btn quiet" id="ldReset">Restart</button>
+          <button class="btn alt" id="ldNew">New problem</button>
+        </div>
+      </div>
+
+      <div class="grid2" style="margin-top:1rem">
+        <div>
+          <h3>Check your own work</h3>
+          <p>Multiply the quotient by the divisor, then add the remainder. If you get the dividend back, you nailed it.</p>
+          <p class="readout">quotient × divisor + remainder = dividend</p>
+        </div>
+        <div>
+          <h3>Two habits that fix most errors</h3>
+          <p>Keep your digits in straight columns — grid paper helps. And estimate first, so a wildly wrong answer stands out immediately.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Your turn on the machine</h2>
+      <p>Solve it on paper, type your answer, then step through to compare.</p>
+      <div id="ldPractice"></div>
+    </div>
+  </section>
+
+  <!-- ============ 4 ============ -->
+  <section class="station" id="s4" tabindex="-1">
+    <div class="card">
+      <div class="eyebrow">Station 5 · The leftover bin</div>
+      <h1>What do you do with the remainder?</h1>
+      <p>Here is the part that trips people up: <b>the math is the same, but the answer changes depending on the story.</b> 29 ÷ 4 is always 7 R1. What you report to your boss is not always 7.</p>
+
+      <div class="grid2">
+        <div class="card tight"><span class="tag">Round up</span><p style="margin:.5em 0 0">29 kids, 4 per van. You need <b>8</b> vans. That last kid still needs a ride.</p></div>
+        <div class="card tight"><span class="tag mint">Drop it</span><p style="margin:.5em 0 0">29 dollars, tickets cost 4 dollars. You can buy <b>7</b> tickets. You cannot buy part of a ticket.</p></div>
+        <div class="card tight"><span class="tag tom">Share it</span><p style="margin:.5em 0 0">29 brownies split 4 ways. Each person gets <b>7¼</b>. The leftover gets cut up.</p></div>
+        <div class="card tight"><span class="tag" style="background:var(--steel)">Report it</span><p style="margin:.5em 0 0">29 cookies, 4 per box. <b>1 cookie</b> is left over. The remainder <i>is</i> the answer.</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Sort the leftovers</h2>
+      <div id="remQs"></div>
+    </div>
+  </section>
+
+  <!-- ============ 5 ============ -->
+  <section class="station" id="s5" tabindex="-1">
+    <div class="card">
+      <div class="eyebrow">Station 6 · Fractions and decimals</div>
+      <h1>Smaller pieces, same idea.</h1>
+      <p>Division does not stop at whole cookies. Sometimes you are scooping fractions of a cup, and sometimes you are splitting money.</p>
+
+      <h3 style="margin-top:1.2rem">Dividing by a fraction makes <i>more</i> pieces</h3>
+      <p>"How many ½-cup scoops fit in 6 cups?" You are not making things smaller — you are counting how many small scoops fit inside. The answer is bigger than you started with.</p>
+      <div class="machine">
+        <div class="controls">
+          <label class="ctl">Cups <input type="range" id="fCups" min="1" max="8" value="6"><b id="fCupsOut">6</b></label>
+          <label class="ctl">Scoop size
+            <select id="fDen" style="font:inherit;padding:.3rem;border-radius:8px;border:2px solid var(--line);font-weight:700">
+              <option value="2">1/2 cup</option><option value="3">1/3 cup</option><option value="4">1/4 cup</option>
+            </select>
+          </label>
+        </div>
+        <div class="bar-model" id="fBar"></div>
+        <div class="readout" id="fOut"></div>
+      </div>
+
+      <h3 style="margin-top:1.4rem">Dividing a fraction by a whole number makes <i>smaller</i> pieces</h3>
+      <p>"¼ of a pizza shared by 3 friends." Each friend gets a slice of a slice.</p>
+      <div class="machine">
+        <div class="controls">
+          <label class="ctl">Start with
+            <select id="gDen" style="font:inherit;padding:.3rem;border-radius:8px;border:2px solid var(--line);font-weight:700">
+              <option value="2">1/2</option><option value="3">1/3</option><option value="4" selected>1/4</option>
+            </select>
+          </label>
+          <label class="ctl">Shared by <input type="range" id="gKids" min="2" max="6" value="3"><b id="gKidsOut">3</b> friends</label>
+        </div>
+        <div class="bar-model" id="gBar"></div>
+        <div class="readout" id="gOut"></div>
+      </div>
+
+      <h3 style="margin-top:1.4rem">Money is just decimals</h3>
+      <p>12 friends split a $57.60 bill. Divide exactly like whole numbers — then put the decimal point straight up above where it already is.</p>
+      <div class="machine">
+        <p style="margin:0"><span class="readout">57.60 ÷ 12 = 4.80</span></p>
+        <p style="margin:.7em 0 0">Check it: 4.80 × 12 = 57.60. Each friend pays $4.80.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Small pieces check</h2>
+      <div id="fracQs"></div>
+    </div>
+  </section>
+
+  <!-- ============ 6 ============ -->
+  <section class="station" id="s6" tabindex="-1">
+    <div class="card">
+      <div class="eyebrow">Station 7 · Boss level</div>
+      <h1>The big order.</h1>
+      <p>Ten problems, everything mixed together. Take a hint whenever you want — hints do not cost you anything. Get 8 or more and the factory prints your badge.</p>
+    </div>
+    <div class="card">
+      <div id="bossQs"></div>
+      <div class="btn-row"><button class="btn" id="bossScore">Check my score</button><button class="btn quiet" id="bossReset">Try again</button></div>
+      <div class="scorebox" id="bossBox" role="status" style="margin-top:1rem">
+        <div class="big" id="bossNum">0/10</div>
+        <div id="bossMsg"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7 ============ -->
+  <section class="station" id="s7" tabindex="-1">
+    <div class="card">
+      <div class="eyebrow">Shift complete</div>
+      <h1>Sign your badge.</h1>
+      <p>Type your name and print it, or screenshot it for your teacher.</p>
+      <div class="cert">
+        <div style="font-family:'Baloo 2';font-weight:700;color:var(--ink-soft)">Learning with Mrs. Garcia</div>
+        <h2 style="margin:.3em 0">Certified Division Packer</h2>
+        <p style="margin:.6em auto">awarded to</p>
+        <div class="name" id="certName" contenteditable="true" spellcheck="false" role="textbox" aria-label="Type your name">Your name</div>
+        <p style="margin:1em auto 0">for handling dividends, divisors, quotients, remainders,<br>fractions, and decimals without dropping a single cookie.</p>
+        <p style="margin:.8em auto 0;font-weight:700" id="certDate"></p>
+      </div>
+      <div class="btn-row" id="certActions"><button class="btn" onclick="window.print()">Print my badge</button></div>
+    </div>
+  </section>
+
+  </main>
+</div>
+
+<!-- teacher drawer -->
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Teacher notes">
+  <div class="drawer-inner">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem">
+      <h2 style="margin:0">Teacher notes</h2>
+      <button class="btn quiet" id="drawerClose">Close</button>
+    </div>
+
+    <h3 style="margin-top:1.2rem">Learning objectives</h3>
+    <p>By the end of this unit students can divide a four-digit dividend by a two-digit divisor using partial quotients and the standard algorithm, estimate to check reasonableness, interpret a remainder inside a context, and divide with unit fractions and decimals to the hundredths.</p>
+
+    <h3>Standards alignment</h3>
+    <table>
+      <tr><th>Station</th><th>Common Core</th><th>Texas TEKS</th></tr>
+      <tr><td>1–2 Meaning &amp; estimation</td><td>5.NBT.B.6</td><td>5.3A</td></tr>
+      <tr><td>3–4 Partial quotients &amp; algorithm</td><td>5.NBT.B.6</td><td>5.3C</td></tr>
+      <tr><td>5 Remainder interpretation</td><td>5.NBT.B.6, 5.OA.A.2</td><td>5.3C, 5.4B</td></tr>
+      <tr><td>6 Fractions &amp; decimals</td><td>5.NF.B.7, 5.NBT.B.7</td><td>5.3E, 5.3F, 5.3L</td></tr>
+      <tr><td>7 Boss level</td><td>all of the above</td><td>all of the above</td></tr>
+    </table>
+    <p>
+      <a href="https://www.thecorestandards.org/Math/Content/5/NBT/" target="_blank" rel="noopener">CCSS 5.NBT (whole numbers &amp; decimals)</a> ·
+      <a href="https://www.thecorestandards.org/Math/Content/5/NF/" target="_blank" rel="noopener">CCSS 5.NF (fractions)</a> ·
+      <a href="https://tea.texas.gov/academics/curriculum-standards/teks/texas-essential-knowledge-and-skills" target="_blank" rel="noopener">Texas Essential Knowledge and Skills (TEA)</a> ·
+      <a href="https://lead4ward.com/docs/resources/snapshots/math/teks_snapshot_math_gr_05.pdf" target="_blank" rel="noopener">Grade 5 math TEKS snapshot (PDF)</a>
+    </p>
+
+    <h3>Five-day pacing</h3>
+    <table>
+      <tr><th>Day</th><th>Station</th><th>Focus</th></tr>
+      <tr><td>1</td><td>1–2</td><td>Meaning of division, vocabulary, estimating with friendly numbers</td></tr>
+      <tr><td>2</td><td>3</td><td>Partial quotients with two-digit divisors</td></tr>
+      <tr><td>3</td><td>4</td><td>Standard algorithm, D-M-S-B, self-checking by multiplying back</td></tr>
+      <tr><td>4</td><td>5</td><td>Remainder interpretation in word problems</td></tr>
+      <tr><td>5</td><td>6–7</td><td>Unit fractions, decimals, mixed assessment</td></tr>
+    </table>
+
+    <h3>Differentiation</h3>
+    <p><b>Support:</b> keep students on partial quotients longer; give a multiples chart for the divisor (1×, 2×, 5×, 10×) before starting; use grid paper for column alignment. <b>Extension:</b> ask students to write their own word problem for a given quotient where the remainder must be rounded up, and trade with a partner.</p>
+
+    <h3>Common errors to watch for</h3>
+    <p>Losing column alignment so place value shifts; forgetting to write a zero in the quotient when the divisor does not fit; subtracting incorrectly and carrying a remainder larger than the divisor; and assuming that dividing always makes a number smaller, which breaks down at 6 ÷ ½.</p>
+
+    <h3>Rubric (4 points)</h3>
+    <table>
+      <tr><th>4</th><td>Correct quotient and remainder, estimation shown, remainder interpreted correctly for the context</td></tr>
+      <tr><th>3</th><td>Correct method with one computational slip</td></tr>
+      <tr><th>2</th><td>Method started correctly but breaks down partway; place value errors</td></tr>
+      <tr><th>1</th><td>Operation chosen or set up incorrectly</td></tr>
+    </table>
+
+    <h3>Answer key — Boss level</h3>
+    <p id="keyList" style="font-family:'Roboto Mono',monospace;font-size:.9rem"></p>
+
+    <h3>Free supporting video and practice</h3>
+    <p>
+      <a href="https://www.khanacademy.org/math/cc-fifth-grade-math/multi-digit-multiplication-and-division/imp-multi-digit-division-2/v/division-3-more-long-division-and-remainder-examples" target="_blank" rel="noopener">Khan Academy — long division with remainders</a><br>
+      <a href="https://www.khanacademy.org/math/5th-engage-ny/engage-5th-module-2/5th-module-2-topic-f/v/approximating-multi-digit-division" target="_blank" rel="noopener">Khan Academy — estimating multi-digit division</a><br>
+      <a href="https://www.khanacademy.org/math/5th-engage-ny/engage-5th-module-2/5th-module-2-topic-g/v/multi-digit-division-strategies-for-decimals" target="_blank" rel="noopener">Khan Academy — dividing decimals</a><br>
+      <a href="https://www.khanacademy.org/math/cc-fifth-grade-math/multi-digit-multiplication-and-division/imp-multi-digit-division-2/a/multi-digit-multiplication-and-division-faq" target="_blank" rel="noopener">Khan Academy — multi-digit division FAQ</a><br>
+      <a href="https://achievethecore.org/coherence-map/5/22/221/221" target="_blank" rel="noopener">Achieve the Core — 5.NBT.B.6 coherence map</a>
+    </p>
+
+    <h3>Running this file</h3>
+    <p>It is one self-contained HTML file with no server, no login, and no data stored anywhere. Drop it into Google Classroom, Canvas, Schoology, or a shared drive, or open it straight from a USB stick. Progress resets when the page is refreshed, which is intentional — students can repeat the practice as often as they want.</p>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------------- stations ---------------- */
+var STATIONS = [
+  {id:"s0", label:"Warm-up"},
+  {id:"s1", label:"Estimate"},
+  {id:"s2", label:"Big chunks"},
+  {id:"s3", label:"Long division"},
+  {id:"s4", label:"Leftovers"},
+  {id:"s5", label:"Small pieces"},
+  {id:"s6", label:"Boss level"},
+  {id:"s7", label:"Your badge"}
+];
+var done = {};
+var rail = document.querySelector(".rail");
+
+STATIONS.forEach(function(st, i){
+  var b = document.createElement("button");
+  b.className = "stop";
+  b.id = "nav-" + st.id;
+  b.setAttribute("aria-current", i === 0 ? "true" : "false");
+  b.innerHTML = '<span class="num"><span>' + (i+1) + '</span></span><span class="label">' + st.label + '</span>';
+  b.addEventListener("click", function(){ go(i); });
+  rail.appendChild(b);
+});
+
+function go(i){
+  STATIONS.forEach(function(st, j){
+    document.getElementById(st.id).classList.toggle("active", i === j);
+    document.getElementById("nav-" + st.id).setAttribute("aria-current", i === j ? "true" : "false");
+  });
+  var el = document.getElementById(STATIONS[i].id);
+  el.focus({preventScroll:true});
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function complete(id){
+  if(done[id]) return;
+  done[id] = true;
+  document.getElementById("nav-" + id).classList.add("done");
+  var n = Object.keys(done).length, total = 7;
+  document.getElementById("meterFill").style.width = Math.min(100, (n/total)*100) + "%";
+  document.getElementById("meterLabel").textContent = Math.min(n,total) + " of " + total + " stations";
+}
+
+/* ---------------- station 1: splitter ---------------- */
+var totalSlider = document.getElementById("totalSlider");
+var groupSlider = document.getElementById("groupSlider");
+function drawSplit(){
+  var total = +totalSlider.value, groups = +groupSlider.value;
+  document.getElementById("totalOut").textContent = total;
+  document.getElementById("groupOut").textContent = groups;
+  var q = Math.floor(total/groups), r = total % groups;
+  var box = document.getElementById("crates");
+  box.innerHTML = "";
+  for(var g=0; g<groups; g++){
+    var c = document.createElement("div");
+    c.className = "crate";
+    c.setAttribute("data-label", "Crate " + (g+1));
+    for(var k=0;k<q;k++){ c.appendChild(dot()); }
+    box.appendChild(c);
+  }
+  if(r>0){
+    var lb = document.createElement("div");
+    lb.className = "crate leftover";
+    lb.setAttribute("data-label","Leftover");
+    for(var m=0;m<r;m++){ lb.appendChild(dot()); }
+    box.appendChild(lb);
+  }
+  document.getElementById("splitOut").textContent =
+    total + " ÷ " + groups + " = " + q + (r ? " R" + r : "");
+}
+function dot(){ var d=document.createElement("span"); d.className="dot"; return d; }
+totalSlider.addEventListener("input", drawSplit);
+groupSlider.addEventListener("input", drawSplit);
+drawSplit();
+
+/* ---------------- generic question renderer ---------------- */
+function renderQuestions(host, items, stationId, onAllDone){
+  var answered = {};
+  items.forEach(function(item, idx){
+    var wrap = document.createElement("div");
+    wrap.className = "q";
+    var opts = item.choices.map(function(c, ci){
+      return '<button class="opt" data-i="' + ci + '">' + c + '</button>';
+    }).join("");
+    wrap.innerHTML =
+      '<div class="prompt">' + (idx+1) + '. ' + item.q + '</div>' +
+      '<div class="opts">' + opts + '</div>' +
+      (item.hint ? '<button class="hintbtn">Need a hint?</button><div class="hint">' + item.hint + '</div>' : '') +
+      '<div class="feedback" role="status"></div>';
+    host.appendChild(wrap);
+
+    var fb = wrap.querySelector(".feedback");
+    var hintEl = wrap.querySelector(".hint");
+    var hintBtn = wrap.querySelector(".hintbtn");
+    if(hintBtn){ hintBtn.addEventListener("click", function(){ hintEl.classList.toggle("show"); }); }
+
+    wrap.querySelectorAll(".opt").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var pick = +btn.dataset.i;
+        var right = pick === item.a;
+        wrap.querySelectorAll(".opt").forEach(function(b){
+          b.disabled = true;
+          if(+b.dataset.i === item.a) b.classList.add("right");
+        });
+        if(!right) btn.classList.add("wrong");
+        fb.className = "feedback show " + (right ? "yes" : "no");
+        fb.textContent = (right ? "Correct. " : "Not this time. ") + item.why;
+        answered[idx] = right;
+        if(Object.keys(answered).length === items.length){
+          if(stationId) complete(stationId);
+          if(onAllDone) onAllDone(answered);
+        }
+      });
+    });
+  });
+}
+
+/* ---------------- station 1 quick check ---------------- */
+renderQuestions(document.getElementById("warmupQs"), [
+  {q:"In 3,456 ÷ 24, which number is the divisor?", choices:["3,456","24","144","0"], a:1,
+   hint:"The divisor is the one doing the splitting.", why:"24 is the divisor — it tells you how the 3,456 gets split."},
+  {q:"36 marbles go into 5 equal bags. How many in each bag, and how many are left over?", choices:["7 R1","6 R6","8 R4","5 R11"], a:0,
+   hint:"How many 5s fit in 36 without going over?", why:"5 × 7 = 35, and 36 − 35 = 1, so it is 7 R1."},
+  {q:"Which sentence means the same thing as 72 ÷ 8 = 9?", choices:["72 + 8 = 80","9 × 8 = 72","72 − 8 = 64","8 ÷ 72 = 9"], a:1,
+   hint:"Division and multiplication undo each other.", why:"9 × 8 = 72, which is exactly how you check a division answer."}
+], "s0");
+
+/* ---------------- station 2 estimation ---------------- */
+renderQuestions(document.getElementById("estQs"), [
+  {q:"Estimate 3,150 ÷ 48.", choices:["about 6","about 60","about 600","about 6,000"], a:1,
+   hint:"48 is close to 50. What times 50 gets near 3,150?", why:"3,000 ÷ 50 = 60, so the answer lands near 60."},
+  {q:"Estimate 1,872 ÷ 31.", choices:["about 6","about 16","about 60","about 160"], a:2,
+   hint:"Round 31 to 30 and 1,872 to 1,800.", why:"1,800 ÷ 30 = 60, so 60 is the neighborhood."},
+  {q:"A student says 4,284 ÷ 21 = 24. Without dividing, is that reasonable?", choices:["Yes, that looks right","No, it should be near 200","No, it should be near 2","Cannot tell without dividing"], a:1,
+   hint:"4,000 ÷ 20 is how much?", why:"4,000 ÷ 20 = 200, so 24 is far too small. The real answer is 204."},
+  {q:"Which pair of friendly numbers works best for 5,940 ÷ 58?", choices:["6,000 ÷ 60","5,000 ÷ 50","5,940 ÷ 50","6,000 ÷ 50"], a:0,
+   hint:"You want both numbers close to the originals AND easy to divide.", why:"6,000 ÷ 60 = 100 uses numbers closest to the originals and divides cleanly."}
+], "s1");
+
+/* ---------------- station 3 partial quotients ---------------- */
+var PQ_TOTAL = 736, PQ_DIV = 23;
+var pqLeft = PQ_TOTAL, pqCount = 0, pqSteps = [];
+function pqDraw(){
+  document.getElementById("pqLeft").textContent = pqLeft;
+  document.getElementById("pqCount").textContent = pqCount;
+  document.getElementById("pqLog").innerHTML = pqSteps.join("<br>");
+  var fb = document.getElementById("pqFb");
+  if(pqLeft === 0){
+    fb.className = "feedback show yes";
+    fb.textContent = "Belt empty. " + PQ_TOTAL + " ÷ " + PQ_DIV + " = " + pqCount + ". You filled " + pqCount + " crates with nothing left over.";
+    complete("s2");
+  } else if(pqLeft < PQ_DIV){
+    fb.className = "feedback show yes";
+    fb.textContent = "Only " + pqLeft + " cookies left — not enough for another crate. So " + PQ_TOTAL + " ÷ " + PQ_DIV + " = " + pqCount + " R" + pqLeft + ".";
+    complete("s2");
+  } else {
+    fb.className = "feedback";
+  }
+}
+document.querySelectorAll(".chip.pq").forEach(function(b){
+  b.addEventListener("click", function(){
+    var n = +b.dataset.n, cost = n * PQ_DIV;
+    var fb = document.getElementById("pqFb");
+    if(cost > pqLeft){
+      fb.className = "feedback show no";
+      fb.textContent = n + " crates would need " + cost + " cookies, and only " + pqLeft + " are left. Try a smaller chunk.";
+      return;
+    }
+    pqSteps.push(n + " crates × " + PQ_DIV + " = " + cost + "   →   " + pqLeft + " − " + cost + " = " + (pqLeft - cost));
+    pqLeft -= cost; pqCount += n;
+    pqDraw();
+  });
+});
+document.getElementById("pqReset").addEventListener("click", function(){
+  pqLeft = PQ_TOTAL; pqCount = 0; pqSteps = []; pqDraw();
+});
+pqDraw();
+
+/* ---------------- station 4 long division engine ---------------- */
+function makeSteps(dividend, divisor){
+  var ds = String(dividend).split("").map(Number);
+  var cur = 0, started = false, steps = [];
+  for(var i=0;i<ds.length;i++){
+    cur = cur*10 + ds[i];
+    var q = Math.floor(cur/divisor);
+    if(q > 0) started = true;
+    if(started){
+      var prod = q*divisor, rem = cur - prod;
+      steps.push({col:i, cur:cur, q:q, prod:prod, rem:rem, bring:(i+1 < ds.length ? ds[i+1] : null)});
+      cur = rem;
+    }
+  }
+  return steps;
+}
+
+var LD = {dividend:1748, divisor:23, steps:[], shown:0};
+
+function ldRender(){
+  var ds = String(LD.dividend).split("");
+  var n = ds.length;
+  var wrap = document.getElementById("ldWrap");
+  var grid = document.createElement("div");
+  grid.className = "ld";
+  grid.style.gridTemplateColumns = "3.2em repeat(" + n + ", 1.5em)";
+  grid.setAttribute("aria-label", LD.dividend + " divided by " + LD.divisor);
+
+  function cell(txt, cls){
+    var d = document.createElement("div");
+    d.className = "cell " + (cls||"");
+    d.textContent = txt || "";
+    return d;
+  }
+
+  /* quotient row */
+  grid.appendChild(cell("", "gut"));
+  var qmap = {};
+  LD.steps.slice(0, LD.shown).forEach(function(s){ qmap[s.col] = s.q; });
+  for(var i=0;i<n;i++){ grid.appendChild(cell(qmap[i] !== undefined ? qmap[i] : "", "q")); }
+
+  /* dividend row with bracket */
+  grid.appendChild(cell(LD.divisor, "gut"));
+  for(i=0;i<n;i++){ grid.appendChild(cell(ds[i], "vinc" + (i===0 ? " bracket" : ""))); }
+
+  /* work rows */
+  LD.steps.slice(0, LD.shown).forEach(function(s, k){
+    var prod = String(s.prod).split("");
+    grid.appendChild(cell("−", "gut"));
+    for(i=0;i<n;i++){
+      var pos = i - (s.col - prod.length + 1);
+      var inRange = i >= (s.col - prod.length + 1) && i <= s.col;
+      grid.appendChild(cell(inRange ? prod[pos] : "", "prod" + (inRange ? " underline" : "")));
+    }
+    var rem = String(s.rem).split("");
+    var showBring = (s.bring !== null) && (k+1 < LD.shown);
+    grid.appendChild(cell("", "gut"));
+    for(i=0;i<n;i++){
+      var rpos = i - (s.col - rem.length + 1);
+      var inRem = i >= (s.col - rem.length + 1) && i <= s.col;
+      if(inRem){ grid.appendChild(cell(rem[rpos], "rem")); }
+      else if(showBring && i === s.col + 1){ grid.appendChild(cell(s.bring, "bringdown")); }
+      else { grid.appendChild(cell("", "")); }
+    }
+  });
+
+  wrap.innerHTML = "";
+  wrap.appendChild(grid);
+
+  /* caption + DMSB lights */
+  var cap = document.getElementById("ldCaption");
+  var keys = {D:false,M:false,S:false,B:false};
+  if(LD.shown === 0){
+    cap.textContent = "Ready. " + LD.dividend + " ÷ " + LD.divisor + ". Press Next step to begin.";
+  } else {
+    var s = LD.steps[LD.shown-1];
+    keys.D = keys.M = keys.S = true;
+    var t = "Divide: how many " + LD.divisor + "s fit in " + s.cur + "? " + s.q + ". " +
+            "Multiply: " + s.q + " × " + LD.divisor + " = " + s.prod + ". " +
+            "Subtract: " + s.cur + " − " + s.prod + " = " + s.rem + ".";
+    if(s.bring !== null && LD.shown < LD.steps.length){ t += " Bring down the " + s.bring + " to make " + LD.steps[LD.shown].cur + "."; keys.B = true; }
+    if(LD.shown === LD.steps.length){
+      var q = LD.steps.map(function(x){return x.q;}).join("");
+      var r = LD.steps[LD.steps.length-1].rem;
+      t += "  Done: " + LD.dividend + " ÷ " + LD.divisor + " = " + q + (r ? " R" + r : "") +
+           ".  Check: " + q + " × " + LD.divisor + (r ? " + " + r : "") + " = " + LD.dividend + ".";
+      complete("s3");
+    }
+    cap.textContent = t;
+  }
+  document.querySelectorAll("#dmsb span").forEach(function(el){
+    el.classList.toggle("on", !!keys[el.dataset.k]);
+  });
+  document.getElementById("ldNext").disabled = LD.shown >= LD.steps.length;
+}
+
+function ldLoad(dividend, divisor){
+  LD.dividend = dividend; LD.divisor = divisor;
+  LD.steps = makeSteps(dividend, divisor);
+  LD.shown = 0;
+  ldRender();
+}
+document.getElementById("ldNext").addEventListener("click", function(){ if(LD.shown < LD.steps.length){ LD.shown++; ldRender(); } });
+document.getElementById("ldAll").addEventListener("click", function(){ LD.shown = LD.steps.length; ldRender(); });
+document.getElementById("ldReset").addEventListener("click", function(){ LD.shown = 0; ldRender(); });
+document.getElementById("ldNew").addEventListener("click", function(){
+  var divisor = 11 + Math.floor(Math.random()*21);      /* 11–31 */
+  var quotient = 12 + Math.floor(Math.random()*88);     /* 12–99 */
+  var rem = Math.random() < 0.5 ? 0 : Math.floor(Math.random()*divisor);
+  ldLoad(divisor*quotient + rem, divisor);
+});
+ldLoad(1748, 23);
+
+/* practice input under station 4 */
+(function(){
+  var host = document.getElementById("ldPractice");
+  var problems = [[4896,12],[3672,24],[2735,15],[9815,65]];
+  problems.forEach(function(p, i){
+    var dividend = p[0], divisor = p[1];
+    var q = Math.floor(dividend/divisor), r = dividend % divisor;
+    var row = document.createElement("div");
+    row.className = "q";
+    row.innerHTML =
+      '<div class="prompt">' + (i+1) + '. ' + dividend.toLocaleString() + ' ÷ ' + divisor + ' = ?</div>' +
+      '<label>Quotient <input type="text" inputmode="numeric" class="pq-a" style="width:6rem"></label> ' +
+      '<label style="margin-left:.6rem">Remainder <input type="text" inputmode="numeric" class="pq-r" style="width:5rem"></label> ' +
+      '<button class="btn quiet" style="margin-left:.6rem">Check</button>' +
+      '<div class="feedback" role="status" style="margin-top:.6rem"></div>';
+    host.appendChild(row);
+    var fb = row.querySelector(".feedback");
+    row.querySelector("button").addEventListener("click", function(){
+      var av = row.querySelector(".pq-a").value.replace(/[,\s]/g,"");
+      var rv = row.querySelector(".pq-r").value.replace(/[,\s]/g,"");
+      if(rv === "") rv = "0";
+      if(+av === q && +rv === r){
+        fb.className = "feedback show yes";
+        fb.textContent = "Correct. " + q + " × " + divisor + (r ? " + " + r : "") + " = " + dividend + ".";
+      } else {
+        fb.className = "feedback show no";
+        fb.textContent = "Not yet. Estimate first: " + Math.round(dividend/100)*100 + " ÷ " + (Math.round(divisor/10)*10 || divisor) + " gives you the neighborhood. Then check your column alignment.";
+      }
+    });
+  });
+})();
+
+/* ---------------- station 5 remainders ---------------- */
+renderQuestions(document.getElementById("remQs"), [
+  {q:"A field trip has 154 students. Each bus holds 40. How many buses are needed?", choices:["3 buses","3 R34 buses","4 buses","40 buses"], a:2,
+   hint:"154 ÷ 40 = 3 R34. Can 34 students stay behind?", why:"You round up. Three buses leave 34 students at school, so you need a fourth."},
+  {q:"You have $95. Notebooks cost $8 each. How many can you buy?", choices:["11","11 R7","12","13"], a:0,
+   hint:"95 ÷ 8 = 11 R7. Can you buy part of a notebook?", why:"You drop the remainder. 11 notebooks cost $88 and you keep the leftover $7."},
+  {q:"9 feet of ribbon is shared equally by 4 people. How much does each get?", choices:["2 feet","2 R1 feet","2¼ feet","3 feet"], a:2,
+   hint:"Ribbon can be cut. The leftover foot gets split 4 ways.", why:"The remainder becomes a fraction: 9 ÷ 4 = 2¼ feet each."},
+  {q:"You bag 250 apples, 12 per bag. How many apples are left over after filling full bags?", choices:["20","10","12","2"], a:1,
+   hint:"250 ÷ 12 = 20 R10.", why:"20 full bags use 240 apples, so 10 apples are left. Here the remainder is the answer."},
+  {q:"Which of these situations means you should round the quotient UP?", choices:["Counting how many whole boxes you filled","Figuring out how many vans you need for a group","Finding leftover change","Splitting a pizza fairly"], a:1,
+   hint:"Which one leaves someone stranded if you round down?", why:"Anything where every last item or person must be accounted for gets rounded up."}
+], "s4");
+
+/* ---------------- station 6 fraction models ---------------- */
+var fCups = document.getElementById("fCups"), fDen = document.getElementById("fDen");
+function drawF(){
+  var cups = +fCups.value, den = +fDen.value;
+  document.getElementById("fCupsOut").textContent = cups;
+  var bar = document.getElementById("fBar");
+  bar.innerHTML = "";
+  var pieces = cups * den;
+  for(var i=0;i<pieces;i++){
+    var d = document.createElement("div");
+    d.textContent = "1/" + den;
+    if(pieces > 20) d.textContent = "";
+    bar.appendChild(d);
+  }
+  document.getElementById("fOut").textContent =
+    cups + " ÷ 1/" + den + " = " + pieces + "   (" + pieces + " scoops of 1/" + den + " cup)";
+}
+fCups.addEventListener("input", drawF);
+fDen.addEventListener("change", drawF);
+
+var gDen = document.getElementById("gDen"), gKids = document.getElementById("gKids");
+function drawG(){
+  var den = +gDen.value, kids = +gKids.value;
+  document.getElementById("gKidsOut").textContent = kids;
+  var bar = document.getElementById("gBar");
+  bar.innerHTML = "";
+  for(var i=0;i<kids;i++){
+    var d = document.createElement("div");
+    d.textContent = "1/" + (den*kids);
+    bar.appendChild(d);
+  }
+  document.getElementById("gOut").textContent =
+    "1/" + den + " ÷ " + kids + " = 1/" + (den*kids) + "   (each friend gets 1/" + (den*kids) + " of the whole)";
+}
+gDen.addEventListener("change", drawG);
+gKids.addEventListener("input", drawG);
+drawF(); drawG();
+
+renderQuestions(document.getElementById("fracQs"), [
+  {q:"How many 1/3-cup scoops are in 5 cups?", choices:["5/3","8","15","1/15"], a:2,
+   hint:"Each cup holds 3 scoops.", why:"5 ÷ 1/3 = 15. Dividing by a fraction less than 1 gives a bigger number."},
+  {q:"1/6 of a cake is shared by 2 people. How much does each get?", choices:["1/3","1/8","1/12","2/6"], a:2,
+   hint:"Cutting a sixth in half makes twelfths.", why:"1/6 ÷ 2 = 1/12 of the whole cake each."},
+  {q:"$8.40 split between 6 people is how much each?", choices:["$1.40","$1.04","$14.00","$0.14"], a:0,
+   hint:"84 ÷ 6 = 14, then place the decimal.", why:"$8.40 ÷ 6 = $1.40. Check: 1.40 × 6 = 8.40."},
+  {q:"Is 6 ÷ 1/2 bigger or smaller than 6?", choices:["Bigger — it is 12","Smaller — it is 3","The same — it is 6","Smaller — it is 1/12"], a:0,
+   hint:"You are counting how many halves fit inside 6.", why:"6 ÷ 1/2 = 12. Dividing by a number smaller than 1 always makes the result larger."}
+], "s5");
+
+/* ---------------- station 7 boss level ---------------- */
+var BOSS = [
+  {q:"4,896 ÷ 12 = ?", choices:["48","408","480","4,080"], a:1, hint:"Estimate: 4,800 ÷ 12 = 400.", why:"408 × 12 = 4,896."},
+  {q:"3,672 ÷ 24 = ?", choices:["143","153","163","1,530"], a:1, hint:"24 × 150 = 3,600, so it is just above 150.", why:"153 × 24 = 3,672."},
+  {q:"A bakery packs 1,000 cupcakes into boxes of 25. How many full boxes?", choices:["4","25","40","400"], a:2, hint:"25 × 4 = 100, so 25 × 40 = 1,000.", why:"1,000 ÷ 25 = 40 boxes exactly."},
+  {q:"Estimate 7,182 ÷ 42.", choices:["about 17","about 170","about 1,700","about 7"], a:1, hint:"7,000 ÷ 40 = 175.", why:"The exact answer is 171, so about 170 is right."},
+  {q:"187 students, 6 per table. How many tables are needed?", choices:["31","31 R1","32","30"], a:2, hint:"187 ÷ 6 = 31 R1. That last student needs a seat.", why:"Round up to 32 tables."},
+  {q:"7 ÷ 1/2 = ?", choices:["3.5","7","14","1/14"], a:2, hint:"Count the halves inside 7 wholes.", why:"There are 14 halves in 7, so the answer is 14."},
+  {q:"1/4 ÷ 2 = ?", choices:["1/2","1/6","1/8","2/4"], a:2, hint:"Cut a quarter in half.", why:"1/4 ÷ 2 = 1/8."},
+  {q:"$9.60 ÷ 4 = ?", choices:["$2.04","$2.40","$24.00","$0.24"], a:1, hint:"96 ÷ 4 = 24, then place the decimal point.", why:"$2.40 each. Check: 2.40 × 4 = 9.60."},
+  {q:"Ana has 96 stickers to share equally among 8 friends. Which expression matches?", choices:["96 × 8","96 ÷ 8","96 − 8","8 ÷ 96"], a:1, hint:"Sharing equally means splitting the total.", why:"96 ÷ 8 = 12 stickers each."},
+  {q:"25 feet of rope is cut into 4 equal pieces. How long is each piece?", choices:["6 feet","6 R1 feet","6¼ feet","7 feet"], a:2, hint:"Rope can be cut into fractions.", why:"25 ÷ 4 = 6¼ feet each."}
+];
+var bossState = {};
+function buildBoss(){
+  var host = document.getElementById("bossQs");
+  host.innerHTML = "";
+  bossState = {};
+  document.getElementById("bossBox").classList.remove("show");
+  renderQuestions(host, BOSS, null, null);
+  /* track answers separately so score button works */
+  host.querySelectorAll(".q").forEach(function(qEl, i){
+    qEl.querySelectorAll(".opt").forEach(function(b){
+      b.addEventListener("click", function(){ bossState[i] = (+b.dataset.i === BOSS[i].a); });
+    });
+  });
+}
+buildBoss();
+document.getElementById("bossReset").addEventListener("click", buildBoss);
+document.getElementById("bossScore").addEventListener("click", function(){
+  var keys = Object.keys(bossState);
+  var right = keys.filter(function(k){ return bossState[k]; }).length;
+  var box = document.getElementById("bossBox");
+  document.getElementById("bossNum").textContent = right + "/10";
+  var msg;
+  if(keys.length < 10){ msg = "You have answered " + keys.length + " of 10 so far. Finish the rest, then check again."; }
+  else if(right >= 8){ msg = "Badge earned. Head to the last station and sign it."; complete("s6"); }
+  else if(right >= 5){ msg = "Solid work. Reread the feedback on the ones you missed, hit Try again, and go for 8."; }
+  else { msg = "Go back to Station 3 and Station 4, then come back. Estimating first will fix most of these."; }
+  document.getElementById("bossMsg").textContent = msg;
+  box.classList.add("show");
+});
+
+/* ---------------- certificate ---------------- */
+document.getElementById("certDate").textContent = new Date().toLocaleDateString(undefined, {year:"numeric", month:"long", day:"numeric"});
+var certName = document.getElementById("certName");
+certName.addEventListener("focus", function(){
+  if(certName.textContent.trim() === "Your name"){ certName.textContent = ""; }
+});
+
+/* ---------------- teacher drawer + answer key ---------------- */
+document.getElementById("keyList").innerHTML = BOSS.map(function(b, i){
+  return (i+1) + ". " + b.choices[b.a];
+}).join(" &nbsp;·&nbsp; ");
+var drawer = document.getElementById("drawer");
+document.getElementById("teacherBtn").addEventListener("click", function(){ drawer.classList.add("open"); });
+document.getElementById("drawerClose").addEventListener("click", function(){ drawer.classList.remove("open"); });
+drawer.addEventListener("click", function(e){ if(e.target === drawer) drawer.classList.remove("open"); });
+document.addEventListener("keydown", function(e){ if(e.key === "Escape") drawer.classList.remove("open"); });
+
+})();
+</script>
+</body>
+</html>
